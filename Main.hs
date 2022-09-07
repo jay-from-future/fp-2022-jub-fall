@@ -27,10 +27,9 @@ square = Rectangle (PointD 0 0) (PointD 1 1)
 -- чтобы его левый нижний угол был первым аргументом конструктора,
 -- а правый верхний -- вторым.
 normalizeRectangle :: Shape -> Shape
-normalizeRectangle (Rectangle (PointD x0 y0) (PointD x1 y1)) =
-  if validateShape (Rectangle (PointD x0 y0) (PointD x1 y1))
-  then Rectangle (PointD (min x0 x1) (min y0 y1)) (PointD (max x0 x1) (max y0 y1))
-  else Rectangle (PointD x0 y0) (PointD x1 y1)
+normalizeRectangle rectangle@(Rectangle (PointD x0 y0) (PointD x1 y1))
+  | validateShape rectangle = Rectangle (PointD (min x0 x1) (min y0 y1)) (PointD (max x0 x1) (max y0 y1))
+  | otherwise = rectangle
 
 -- другие фигуры передаем без изменений чтобы пройти тесты
 normalizeRectangle anything = anything
