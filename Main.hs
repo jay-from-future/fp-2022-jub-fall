@@ -40,7 +40,10 @@ normalizeRectangle anything = anything
 -- Стороны прямоугольника должны иметь положительную длину
 validateShape :: Shape -> Bool
 validateShape (Circle center radius) = radius > 0
-validateShape (Rectangle (PointD x0 y0) (PointD x1 y1)) = not (abs (x0 - x1) == 0 || abs (y0 - y1) == 0)
+-- validateShape (Rectangle (PointD x0 y0) (PointD x1 y1)) = not (abs (x0 - x1) == 0 || abs (y0 - y1) == 0)
+validateShape (Rectangle (PointD x0 y0) (PointD x1 y1)) = 
+  let (Rectangle (PointD x0_n y0_n) (PointD x1_n y1_n)) = normalizeRectangle (Rectangle (PointD x0 y0) (PointD x1 y1))
+  in not ((x0_n - x1_n) == 0 || (y0_n - y1_n) == 0)
 
 -- Считает периметр фигуры
 perimeter :: Shape -> Double
